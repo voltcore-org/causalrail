@@ -6,6 +6,7 @@ import { githubHmac } from "./middleware/hmac.js";
 import { handleGitHubWebhook } from "./routes/webhooks.js";
 import { apiRouter } from "./routes/api.js";
 import { runBootPreflight } from "./scopeshield.js";
+import { startMeshHeartbeat } from "./mesh-heartbeat.js";
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.get("/health", async (_req, res) => {
     db,
     configured: dbConfigured(),
     dbError: db ? null : dbLastError(),
+    mesh: "causalrail",
   });
 });
 
@@ -69,6 +71,7 @@ process.on("unhandledRejection", (reason) => {
 });
 
 runBootPreflight();
+startMeshHeartbeat();
 
 app.listen(config.port, "0.0.0.0", () => {
   console.log(`CausalRail API listening on ${config.port}`);

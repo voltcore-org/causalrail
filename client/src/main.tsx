@@ -2,9 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import App from "./App";
+import { startMeshBeat } from "./lib/mesh-heartbeat";
 import { Dashboard } from "./pages/Dashboard";
 import { Inspector } from "./pages/Inspector";
 import "./styles.css";
+
+startMeshBeat();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

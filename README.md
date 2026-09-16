@@ -7,9 +7,20 @@ Dashboard: GitHub Pages. API: Render. Database: Supabase Postgres.
 ## Layout
 
 ```
-client/    React 18 + Vite + Tailwind (HashRouter, base: './')
-server/    Express + TypeScript
-schema.sql Supabase DDL (build_runs, failure_analysis)
+package.json           root runtime manifest + heartbeat script
+voltcore/heartbeat.mjs Dual-Rail 60s emitter (node timer, not GHA cron)
+client/                React 18 + Vite + Tailwind (HashRouter, base: './')
+server/                Express + TypeScript
+schema.sql             Supabase DDL (build_runs, failure_analysis)
+```
+
+## Mesh
+
+`voltcore/heartbeat.mjs` POSTs `source=causalrail` to `https://core-api.dominic-calandro1991.workers.dev/api/v1/events`. The server starts an in-process 60s timer; the dashboard does the same while the tab is open. Trunk Cloudflare cron is the source of truth. Do not add a GitHub Actions minute cron.
+
+```
+node voltcore/heartbeat.mjs --once
+node voltcore/heartbeat.mjs --loop
 ```
 
 ## Board

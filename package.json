@@ -1,0 +1,20 @@
+{
+  "name": "causalrail",
+  "private": true,
+  "version": "1.1.0",
+  "type": "module",
+  "description": "CI failure attribution rail with Dual-Rail mesh heartbeat.",
+  "scripts": {
+    "heartbeat": "node voltcore/heartbeat.mjs --once",
+    "heartbeat:loop": "node voltcore/heartbeat.mjs --loop",
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
+    "build": "npm --prefix client run build && npm --prefix server run build",
+    "test": "npm --prefix server test"
+  },
+  "voltcore": {
+    "lane": "causalrail",
+    "trunk": "https://core-api.dominic-calandro1991.workers.dev",
+    "interval_s": 60
+  }
+}
